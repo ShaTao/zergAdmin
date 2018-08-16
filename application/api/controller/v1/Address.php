@@ -1,32 +1,39 @@
 <?php
 namespace app\api\controller\v1;
 
-use app\api\validate\AddressNew;
+use app\api\controller\BaseController;
 use app\api\service\Token as TokenService;
+use app\api\validate\AddressNew;
 use app\api\model\User as UserModel;
 use app\lib\exception\UserException;
 use app\lib\exception\SuccessMessage;
+// use think\Controller;
+// use app\lib\exception\TokenException;
+// use app\lib\enum\ScopeEnum;
+// use app\lib\exception\ForbiddenException;
 
-class Address
+class Address extends BaseController
 {
+    protected $beforeActionList = [
+        "needprimaryscope" => ["only" => "createorupdateaddress"]
+    ];
+
     public function createOrUpdateAddress()
     {
         $addressValidate = new AddressNew();
         $addressValidate->goCheck();
         $uid = TokenService::getCurrentUid();
         $user = UserModel::get($uid);
-        if(!$user){
+        if (!$user) {
             throw new UserException();
         }
-        // return $uid;
         $dataArr = $addressValidate->getDataByRule(input("post."));
         $userAddress = $user->address;
-        if(!$userAddress){
+        if (!$userAddress) {
             $user->address()->save($dataArr);
-        }else{
+        } else {
             $user->address->save($dataArr);
         }
-        // return json($user);
         return json(new SuccessMessage(), 201);
     }
 }

@@ -5,6 +5,7 @@ use think\Exception;
 use app\lib\exception\WxChatException;
 use app\api\model\User as UserModel;
 use app\lib\exception\TokenException;
+use app\lib\enum\ScopeEnum;
 
 class UserToken extends Token
 {
@@ -74,7 +75,8 @@ class UserToken extends Token
     {
         $cacheValue = $result;
         $cacheValue["uid"] = $uid;
-        $cacheValue["scope"] = 16;
+        $cacheValue["scope"] = ScopeEnum::User;
+        // $cacheValue["scope"] = 10;
         return $cacheValue;
     }
 
