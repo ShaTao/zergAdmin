@@ -34,6 +34,15 @@ class Order
         return $order;
     }
 
+    public function checkOrderStock($oId)
+    {
+        $oProducts = OrderProduct::where("order_id", "=", $oId)->select();
+        $this->oProducts = $oProducts;
+        $this->products = $this->getProductByOrder($oProducts);
+        $status = $this->getOrderStatus();
+        return $status;
+    }
+
     private function createOrder($snap)
     {
         Db::startTrans();

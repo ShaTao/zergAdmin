@@ -2,6 +2,7 @@
 namespace app\api\service;
 
 use app\lib\exception\TokenException;
+use think\Exception;
 // use think\facade\Cache;
 
 
@@ -40,5 +41,17 @@ class Token
     {
         $uid = self::getCurrentTokenVar("uid");
         return $uid;
+    }
+
+    public static function isValidOperate($checkedUId)
+    {
+        if(!$checkedUId){
+            throw new Exception(["须输入待检测的用户Id"]);
+        }
+        $uid = self::getCurrentUid();
+        if($checkedUId == $uid){
+            return true;
+        }
+        return false;
     }
 }

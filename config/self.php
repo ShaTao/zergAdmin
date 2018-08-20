@@ -8,5 +8,6 @@ return [
     "app_secret" => "3751b7a22df5a2a30791f6f64cc84dc1",
     "jscode_url" => "https://api.weixin.qq.com/sns/jscode2session?appid=%s&secret=%s&js_code=%s&grant_type=authorization_code",
     //敏感信息配置
-    "token_salt" => "HHb2Ued0qApTR69c"
+    "token_salt" => "HHb2Ued0qApTR69c",
+    "pay_back_url" => "http://z.com/api/v1/notify"
 ];
